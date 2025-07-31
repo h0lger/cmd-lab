@@ -1,3 +1,12 @@
 #include <SDL2/SDL.h>
 
-void DrawBackground(SDL_Renderer *renderer);
+class Background{
+    public:
+    Background(SDL_Renderer *renderer);
+    ~Background();
+
+    void Draw();
+    private:
+    SDL_Renderer *_renderer;
+
+};

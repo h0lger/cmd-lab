@@ -35,7 +35,9 @@ Text::Text(SDL_Renderer *renderer, const char *text, const DaFont *font) {
               << std::endl;
   }
 }
-Text::~Text() {}
+Text::~Text() {
+    SDL_DestroyTexture(this->_textTexture);
+}
 void Text::Draw() {
   // Render main text
   SDL_RenderCopy(this->_renderer, this->_textTexture, NULL, &this->_dstRect);

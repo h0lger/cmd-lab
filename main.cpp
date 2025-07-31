@@ -41,55 +41,11 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   std::unique_ptr<Fps> fpsPtr(new Fps(renderer));
-  std::unique_ptr<DaFont> daFontPtr (new DaFont("/System/Library/Fonts/SFNSMono.ttf", 24, 24));
-  std::unique_ptr<Text> textPtr(new Text(renderer, "Yeah hello", daFontPtr.get()));
-
-  // --- Font and Text Setup ---
-  const char *fontPath = "/System/Library/Fonts/SFNSMono.ttf";
-  int renderFontSize = 24;
-  int displayFontSize = 24;
-  TTF_Font *font = TTF_OpenFont(fontPath, renderFontSize);
-  if (!font) {
-    std::cerr << "TTF_OpenFont Error: " << TTF_GetError() << std::endl;
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(win);
-    TTF_Quit();
-    SDL_Quit();
-    return 1;
-  }
-  SDL_Color color = {255, 255, 255, 255};
-  SDL_Surface *textSurface =
-      TTF_RenderUTF8_Blended(font, "Hello, SDL2_ttf!", color);
-  if (!textSurface) {
-    std::cerr << "TTF_RenderUTF8_Solid Error: " << TTF_GetError() << std::endl;
-    TTF_CloseFont(font);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(win);
-    TTF_Quit();
-    SDL_Quit();
-    return 1;
-  }
-  float scale = displayFontSize / (float)renderFontSize;
-  int scaledW = (int)(textSurface->w * scale);
-  int scaledH = (int)(textSurface->h * scale);
-  if (scaledW < 1)
-    scaledW = 1;
-  if (scaledH < 1)
-    scaledH = 1;
-  SDL_Rect dstRect = {100, 200, scaledW, scaledH};
-  SDL_Texture *textTexture =
-      SDL_CreateTextureFromSurface(renderer, textSurface);
-  SDL_FreeSurface(textSurface);
-  if (!textTexture) {
-    std::cerr << "SDL_CreateTextureFromSurface Error: " << SDL_GetError()
-              << std::endl;
-    TTF_CloseFont(font);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(win);
-    TTF_Quit();
-    SDL_Quit();
-    return 1;
-  }
+  std::unique_ptr<DaFont> daFontPtr(
+      new DaFont("/System/Library/Fonts/SFNSMono.ttf", 24, 24));
+  std::unique_ptr<Text> textPtr(
+      new Text(renderer, "Yeah hello", daFontPtr.get()));
+  std::unique_ptr<Background> backgroundPtr(new Background(renderer));
 
   // --- Main Loop ---
   SDL_Event e;
@@ -102,21 +58,20 @@ int main(int argc, char *argv[]) {
         running = false;
     }
 
-    DrawBackground(renderer);
-    //render fps
+    backgroundPtr->Draw();
+    // render fps
     fpsPtr->Draw();
     textPtr->Draw();
-
-    // Render main text
-    // SDL_RenderCopy(renderer, textTexture, NULL, &dstRect);
 
     SDL_RenderPresent(renderer);
     SDL_Delay(10);
   }
 
   // --- Cleanup ---
-  SDL_DestroyTexture(textTexture);
-  TTF_CloseFont(font);
+	fpsPtr.reset();
+	daFontPtr.reset();
+	textPtr.reset();
+	backgroundPtr.reset();
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(win);
   TTF_Quit();

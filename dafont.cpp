@@ -2,8 +2,6 @@
 #include "iostream"
 #include <SDL2/SDL_ttf.h>
 
-
-
 DaFont::DaFont(const char *fontPath, int fontSize, int renderSize) {
   // Initialize the font using the provided path
   this->FontSize = fontSize;
@@ -22,4 +20,5 @@ TTF_Font *DaFont::GetFont() const { return _font; }
 
 DaFont::~DaFont() {
   // Clean up resources
+	TTF_CloseFont(this->_font);
 }
