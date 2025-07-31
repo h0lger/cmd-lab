@@ -1,8 +1,11 @@
 #include "background.h"
+#include "dafont.h"
 #include "fps.h"
+#include "text.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
+#include <memory>
 
 int main(int argc, char *argv[]) {
   // --- Initialization ---
@@ -38,6 +41,8 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   std::unique_ptr<Fps> fpsPtr(new Fps(renderer));
+  std::unique_ptr<DaFont> daFontPtr (new DaFont("/System/Library/Fonts/SFNSMono.ttf", 24, 24));
+  std::unique_ptr<Text> textPtr(new Text(renderer, "Yeah hello", daFontPtr.get()));
 
   // --- Font and Text Setup ---
   const char *fontPath = "/System/Library/Fonts/SFNSMono.ttf";
@@ -100,9 +105,10 @@ int main(int argc, char *argv[]) {
     DrawBackground(renderer);
     //render fps
     fpsPtr->Draw();
+    textPtr->Draw();
 
     // Render main text
-    SDL_RenderCopy(renderer, textTexture, NULL, &dstRect);
+    // SDL_RenderCopy(renderer, textTexture, NULL, &dstRect);
 
     SDL_RenderPresent(renderer);
     SDL_Delay(10);
