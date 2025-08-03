@@ -1,3 +1,4 @@
+#include "constants.h"
 #include "background.h"
 #include "dafont.h"
 #include "fps.h"
@@ -42,7 +43,7 @@ int main(int argc, char *argv[]) {
   }
   std::unique_ptr<Fps> fpsPtr(new Fps(renderer));
   std::unique_ptr<DaFont> daFontPtr(
-      new DaFont("/System/Library/Fonts/SFNSMono.ttf", 24, 24));
+      new DaFont(DEFAULT_MONO_FONT, 24, 24));
   std::unique_ptr<Text> textPtr(
       new Text(renderer, "Yeah hello", daFontPtr.get()));
   std::unique_ptr<Background> backgroundPtr(new Background(renderer));
