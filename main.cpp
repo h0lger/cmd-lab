@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
   }
 
   SDL_Window *win = SDL_CreateWindow(
-      "Hello SDL2!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480,
+      "Commander", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1400, 1000,
       SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
   if (!win) {
     std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
