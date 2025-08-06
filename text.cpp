@@ -4,10 +4,12 @@
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
 
-Text::Text(SDL_Renderer *renderer, const char *text, const DaFont *font) {
+Text::Text(int x, int y, SDL_Renderer *renderer, const char *text, const DaFont *font) {
   this->_text = text;
   this->_font = font;
   this->_renderer = renderer;
+	this->_x = x;
+	this->_y = y;	
 
   this->_textSurface = TTF_RenderUTF8_Blended(this->_font->GetFont(), this->_text, this->_color);
   if (!this->_textSurface) {
@@ -27,7 +29,7 @@ Text::Text(SDL_Renderer *renderer, const char *text, const DaFont *font) {
     scaledW = 1;
   if (scaledH < 1)
     scaledH = 1;
-  this->_dstRect = {100, 200, scaledW, scaledH};
+  this->_dstRect = {_x, _y, scaledW, scaledH};
   this->_textTexture = SDL_CreateTextureFromSurface(this->_renderer, this->_textSurface);
   SDL_FreeSurface(this->_textSurface);
   if (!this->_textTexture) {

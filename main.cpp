@@ -1,3 +1,4 @@
+#include "filelist.h"
 #include "constants.h"
 #include "background.h"
 #include "dafont.h"
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]) {
   }
 
   SDL_Window *win = SDL_CreateWindow(
-      "Commander", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1400, 1000,
+      "Commander", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1200, 900,
       SDL_WINDOW_RESIZABLE | SDL_WINDOW_ALLOW_HIGHDPI);
   if (!win) {
     std::cerr << "SDL_CreateWindow Error: " << SDL_GetError() << std::endl;
@@ -42,11 +43,8 @@ int main(int argc, char *argv[]) {
     return 1;
   }
   std::unique_ptr<Fps> fpsPtr(new Fps(renderer));
-  std::unique_ptr<DaFont> daFontPtr(
-      new DaFont(DEFAULT_MONO_FONT, 24, 24));
-  std::unique_ptr<Text> textPtr(
-      new Text(renderer, "Yeah hello", daFontPtr.get()));
   std::unique_ptr<Background> backgroundPtr(new Background(renderer));
+	std::unique_ptr<Filelist> filelistPtr(new Filelist(renderer));
 
   // --- Main Loop ---
   SDL_Event e;
@@ -62,7 +60,7 @@ int main(int argc, char *argv[]) {
     backgroundPtr->Draw();
     // render fps
     fpsPtr->Draw();
-    textPtr->Draw();
+		filelistPtr->Draw({"file1.txt", "file2.txt", "file3.txt"});
 
     SDL_RenderPresent(renderer);
     SDL_Delay(10);
@@ -70,8 +68,6 @@ int main(int argc, char *argv[]) {
 
   // --- Cleanup ---
 	fpsPtr.reset();
-	daFontPtr.reset();
-	textPtr.reset();
 	backgroundPtr.reset();
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(win);

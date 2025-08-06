@@ -9,7 +9,7 @@ void Background::Draw() {
   int winW, winH;
   SDL_GetRendererOutputSize(this->_renderer, &winW, &winH);
   for (int y = 0; y < winH; ++y) {
-    Uint8 r = (Uint8)(30 + 225 * y / winH);
+    Uint8 r = (Uint8)(30 + 25 * y / winH);
     Uint8 g = (Uint8)(30 + 100 * y / winH);
     Uint8 b = (Uint8)(30 + 180 * y / winH);
     SDL_SetRenderDrawColor(this->_renderer, r, g, b, 255);

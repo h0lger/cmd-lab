@@ -6,7 +6,7 @@
 
 class Text {
 public:
-  Text(SDL_Renderer *renderer, const char *text, const DaFont *font);
+  Text(int x, int y, SDL_Renderer *renderer, const char *text, const DaFont *font);
   ~Text();
 
   void Draw();
@@ -18,6 +18,7 @@ private:
   SDL_Surface *_textSurface;
   SDL_Rect _dstRect;
   SDL_Texture *_textTexture;
+	int _x, _y;		
   SDL_Color _color = {255, 255, 255, 255};
 };
 
