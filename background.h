@@ -1,3 +1,5 @@
+#ifndef BACKGROUND_H
+#define BACKGROUND_H
 #include <SDL2/SDL.h>
 
 class Background{
@@ -10,3 +12,4 @@ class Background{
     SDL_Renderer *_renderer;
 
 };
+#endif

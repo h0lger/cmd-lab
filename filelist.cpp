@@ -28,6 +28,7 @@ void Filelist::Draw(const std::vector<std::string> &files)
 
 	// text
 	uint n = 10;
+	
 	std::for_each(files.begin(), files.end(), [&](const std::string &file)
 	{
 		const std::unique_ptr<Text> textPtr(

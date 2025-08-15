@@ -1,5 +1,11 @@
+#ifndef FILELIST_H
+#define FILELIST_H
+
 #include <SDL2/SDL.h>
 #include <vector>
+#include <string>
+#include <memory>
+#include <algorithm>
 
 class Filelist{
     public:
@@ -11,3 +17,5 @@ class Filelist{
     SDL_Renderer *_renderer;
 
 };
+
+#endif
